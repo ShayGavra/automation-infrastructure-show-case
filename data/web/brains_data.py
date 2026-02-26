@@ -1,0 +1,5 @@
+BRAINS_URL = "https://practice.qabrains.com/ecommerce"
+EMAIL = "test@qabrains.com"
+PASSWORD = "Password123"
+LOGIN_ERROR_MESSAGE = "Epic sadface"
+EXPECTED_HOME_HEADER = "Products"

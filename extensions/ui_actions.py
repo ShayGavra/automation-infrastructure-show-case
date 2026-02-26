@@ -47,3 +47,19 @@ class UIActions:
         element.fill("")  # clear first (more stable)
         element.fill(text, timeout=timeout)
 
+
+    @staticmethod
+    @allure.step("Refresh the current page")
+    def refresh(page: Page, wait_until: str = "load", timeout: int = DEFAULT_TIMEOUT) -> None:
+        page.reload(wait_until=wait_until, timeout=timeout)
+        page.wait_for_load_state(wait_until, timeout=timeout)
+
+
+    @staticmethod
+    @allure.step("Count number of visible elements")
+    def count(elements: Locator, timeout: int = DEFAULT_TIMEOUT) -> int:
+        try:
+            elements.first.wait_for(state="visible", timeout=timeout)
+        except:
+            return 0
+        return elements.count()

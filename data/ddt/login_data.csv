@@ -1,0 +1,5 @@
+email,password,expected_status
+test@qabrains.com,Password123,success
+practice@qabrains.com,Password123,success
+student@qabrains.com,Password123,success
+invalid_user,invalid_pass,failure
