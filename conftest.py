@@ -2,11 +2,11 @@ import pytest
 from pytest import FixtureRequest
 from playwright.sync_api import Playwright
 
-# from data.api.chuck_api_data import *
-from data.web.brains_data import BRAINS_URL, EMAIL, PASSWORD
+from data.api.placeholder_posts_data import *
+from data.web.brains_data import *
 from utils.common_ops import load_config
 from utils.fixture_helpers import get_browser
-# from workflows.api.chuck_api_flows import ChuckApiFlows
+from workflows.api.placeholder_posts_workflows import PlaceholderPostsApiFlows
 from workflows.web.brains_workflows import BrainsFlows
 
 # Load the configuration
@@ -26,7 +26,7 @@ def page(playwright: Playwright, request:FixtureRequest):
 
 @pytest.fixture(scope= "class")
 def request_context(playwright: Playwright, request:FixtureRequest):
-    request_context=playwright.request.new_context(base_url=CHUCK_BASE_URL)
+    request_context=playwright.request.new_context(base_url=PLACEHOLDER_BASE_URL)
     yield request_context
     request_context.dispose()
 
@@ -36,14 +36,32 @@ def request_context(playwright: Playwright, request:FixtureRequest):
 def brains_flows(page):
     return BrainsFlows(page)
 
+
 # Fixture for home page tests (already logged in)
 @pytest.fixture(scope="class")
 def logged_in_flows(brains_flows:BrainsFlows):
     brains_flows.sign_in(EMAIL,PASSWORD)
-    print(brains_flows.page.url)
     return brains_flows
 
+
+
+# Fixture for home page tests (already logged in)
+@pytest.fixture(scope="class")
+def add_products_flows(brains_flows:BrainsFlows):
+    brains_flows.sign_in(EMAIL,PASSWORD)
+    brains_flows.add_all_products_to_cart()
+    return brains_flows
+
+# Fixture for home page tests (already logged in)
+@pytest.fixture(scope="class")
+def cart_flows(brains_flows:BrainsFlows):
+    brains_flows.sign_in(EMAIL,PASSWORD)
+    brains_flows.add_all_products_to_cart()
+    brains_flows.navigate_to_cart()
+    return brains_flows
+
+
 @pytest.fixture
-def chuck_flows(request_context):
-    return ChuckApiFlows(request_context)
+def post_flows(request_context):
+    return PlaceholderPostsApiFlows(request_context)
 

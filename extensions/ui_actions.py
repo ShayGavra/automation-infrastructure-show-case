@@ -63,3 +63,18 @@ class UIActions:
         except:
             return 0
         return elements.count()
+    
+
+
+    @staticmethod
+    @allure.step("Get all text from elements")
+    def get_all_text(locator: Locator, timeout: int = DEFAULT_TIMEOUT) -> list[str]:
+        locator.first.wait_for(state="visible", timeout=timeout)
+        return locator.all_text_contents()
+
+
+
+    @staticmethod
+    @allure.step("Check if element exist")
+    def element_exist(locator:Locator)->bool:
+        return locator.count()>0

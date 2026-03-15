@@ -1,5 +1,8 @@
 
 class APIVerify:
+
+
+
     @staticmethod
     def status_code(response, expected_status_code: int):
         """
@@ -11,14 +14,29 @@ class APIVerify:
             f"Expected status code {expected_status_code}, but got {response.status}"
         
 
-    @staticmethod
-    def json_key_exists(response_data, key: str):
-        """
-        Verifies that a specific key exists in the JSON response.
-        """
-        assert key in response_data, f"Key '{key}' not found in the response JSON"
 
-    
+    @staticmethod
+    def is_list(response_data, description):
+        """
+        Verifies that the response data is a list.
+        """
+        assert isinstance(response_data, list), description
+
+
+
+    @staticmethod
+    def json_key_exists(response_data, key=None, keys=None):
+        """
+        Verifies that a specific key or a list of keys exist in the JSON response.
+        """
+        if key is not None:
+            assert key in response_data, f"Key '{key}' not found in the response JSON"
+        if keys is not None:
+            for k in keys:
+                assert k in response_data, f"Key '{k}' not found in the response JSON"
+
+
+
     @staticmethod
     def json_value_equals(response_data, key: str, expected_value):
         """
@@ -28,7 +46,8 @@ class APIVerify:
             f"Expected value for key '{key}' is '{expected_value}', but got '{response_data[key]}'"
         )
 
-    
+
+
     @staticmethod
     def json_contains(response_data, expected_data: dict):
         """
@@ -40,6 +59,8 @@ class APIVerify:
                 f"Expected value for key '{key}' is '{value}', but got '{response_data[key]}'"
             )
 
+
+
     # Soft Assertions
     @staticmethod
     def soft_assert_status_code(response, expected_status_code: int):
@@ -47,19 +68,43 @@ class APIVerify:
         Soft asserts that the API response status code matches the expected status code.
         """
         if isinstance(response, dict):  
-            VerifyAPI.errors.append("Expected a Playwright response object, got a dictionary.")
+            APIVerify.errors.append("Expected a Playwright response object, got a dictionary.")
 
         elif response.status != expected_status_code:
-            VerifyAPI.errors.append(
+            APIVerify.errors.append(
                 f"Expected status code {expected_status_code}, but got {response.status}."
             )
+
+
 
     @staticmethod
     def assert_all():
         """
         Raises all collected assertion errors at once.
         """
-        if VerifyAPI.errors:
-            error_message = "\n".join(VerifyAPI.errors)
-            VerifyAPI.errors.clear()  # Clear errors after raising
+        if APIVerify.errors:
+            error_message = "\n".join(APIVerify.errors)
+            APIVerify.errors.clear()  # Clear errors after raising
             raise AssertionError(f"Soft assertion failures:\n{error_message}")
+        
+
+
+
+    @staticmethod
+    def json_keys_and_types(response_data: dict, expected_types: dict):
+        """
+        Verifies that specific keys exist and have the expected types.
+        
+        expected_types = {
+            "id": int,
+            "userId": int,
+            "title": str,
+            "body": str
+        }
+        """
+        for key, expected_type in expected_types.items():
+            assert key in response_data, f"Key '{key}' not found in response JSON"
+            assert isinstance(response_data[key], expected_type), (
+                f"Expected '{key}' to be {expected_type.__name__}, "
+                f"but got {type(response_data[key]).__name__}"
+            )

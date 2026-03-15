@@ -14,4 +14,5 @@ class BrainsCartPage:
         self.quantity = page.locator("[class='border rounded px-3 py-1 text-gray-500']")
         self.increase_button = page.locator("//button[text()='+']")
         self.reduce_button = page.locator("//button[text()='-']")
-        
+        self.empty_cart_message = page.locator("[class^='text-2xl mx']")
+        self.confirm_remove_button = page.locator("[data-slot='dialog-close']").nth(1)

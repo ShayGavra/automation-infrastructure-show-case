@@ -6,12 +6,15 @@ class BrainsCheckoutPage:
         self.page=page
         self.text_checkot = page.locator("[class='text-xl font-black font-oswald mb-5']")
         self.email_field = page.locator("[class='form-control bg-gray-200 cursor-no-drop opacity-80']")
-        self.frist_name_field = page.locator("[placeholder='Ex. John']")
+        self.first_name_field = page.locator("[placeholder='Ex. John']")
         self.last_name_field = page.locator("[placeholder='Ex. Doe']")
         self.zip_code = page.locator("[type='text']").last
         self.continue_button = page.locator("[class^='flex items-center gap-2 b']")
         self.checkout_list = page.locator("[class^='flex items-center justify-between']")
         self.checkout_price = page.locator("p[class='font-bold font-oswald text-lg']")
         self.total_price = page.locator("//*[@class='group'][3]/p[3]")
+        self.finish_button = page.locator("//button/span[text()='Finish']")
+        self.checkout_Success_message = page.locator("[class='text-lg uppercase font-black font-oswald mb-4']")
+
 
         
