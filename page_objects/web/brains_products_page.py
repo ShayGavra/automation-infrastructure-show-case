@@ -12,4 +12,5 @@ class BrainsProductsPage:
         self.favorites_buttons = page.locator("[class='w-5 h-5']")
         self.add_to_cart_buttons = page.locator("[class^='border inline']")
         self.products_heading = page.locator("[class^='text-xl font-black']")
+        self.products_imgs = page.locator("[src*='/assets/ecom-imgs']")
         

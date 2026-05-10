@@ -24,7 +24,7 @@ class TestBrainsHomePage:
         for link, expected in zip(logged_in_flows.get_footer_social_links(),FOOTER_SOCIAL_LINKS):
             WebVerify.visible(link)
             WebVerify.href_is_valid(link, expected_href=expected)
-        WebVerify.soft_all()
+        WebVerify.soft_all() 
 
 
 

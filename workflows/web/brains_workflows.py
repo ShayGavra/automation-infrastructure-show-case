@@ -156,3 +156,16 @@ class BrainsFlows:
         return removed
     
 
+    @allure.step("Navigate to Cart")
+    def go_cart_page(self):
+        UIActions.click(self.header.shopping_cart_icon)
+
+    @allure.step("get products names")
+    def get_products_names(self):
+        count = UIActions.count(self.products.products_names)
+        names = []
+        for name in range(count):
+            text = UIActions.get_text(self.products.products_names.nth(name))
+            names.append(text)
+
+        return names
